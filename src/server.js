@@ -6,6 +6,7 @@ const AppError = require("./utils/AppError")
 const migrationsRun = require("./migrations/index")
 
 const app = express()
+
 app.use(express.json())
 app.use(routes)
 migrationsRun()
