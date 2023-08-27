@@ -17,15 +17,16 @@ app.use((error, request, response, next) => {
             status: `error`,
             message: error.message
         })
-
     }
-        console.log(error)
 
-        return response.status(500).json({
-            status: `error`,
-            message: `Internal server error`
-        })
+    console.error(error)
+
+    return response.status(500).json({
+        status: `error`,
+        message: `Internal server error`
+    })
 })
 
-const PORT = 3000
-app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`))
+
+const PORT = 3000;
+app.listen(PORT, () => console.log(`Server is running on PORT ${PORT}`));
