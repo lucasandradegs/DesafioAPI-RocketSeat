@@ -7,7 +7,7 @@ class UsersController {
         const { name, email, password } = request.body
 
         const database = await sqliteConnection();
-        const checkIfUserExist = await database.get("SELECT * FROM users WHERE email = (?)", [email])
+        const checkIfUserExist = await database.get("SELECT * FROM users WHERE email = (?)", [email.toLowerCase()])
 
         if(checkIfUserExist) {
             throw new AppError(`O endereço de e-mail já está cadastrado`)
@@ -32,7 +32,7 @@ class UsersController {
             throw new AppError(`Usuário não encontrado na base de dados!`)
         }
 
-        const userWithUpdatedEmail = await database.get("SELECT * FROM users WHERE email = (?)", [email])
+        const userWithUpdatedEmail = await database.get("SELECT * FROM users WHERE email = (?)", [email.toLowerCase()])
 
         if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user.id) {
             throw new AppError(`O endereço de e-mail já está cadastrado`)
@@ -62,7 +62,7 @@ class UsersController {
             password = ?,
             updated_at = DATETIME('now')
             WHERE id = ? `,
-            [user.name, user.email, user.password, user_id]
+            [user.name, user.email.toLowerCase(), user.password, user_id]
             )
 
         return response.json()
