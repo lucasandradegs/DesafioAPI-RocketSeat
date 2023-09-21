@@ -31,6 +31,10 @@ class MoviesController {
 
         const movie = await knex("movies").where({id}).first();
 
+        if(!movie) {
+            throw new AppError("O filme nao existe")
+        }
+
         const tags = await knex("tags").where({movie_id: id}).orderBy("name")
 
         return response.json({
